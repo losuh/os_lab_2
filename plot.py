@@ -1,0 +1,41 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('result.csv')
+
+threads_ticks = [1, 2, 4, 8, 16, 64, 128, 1024, 4096]
+
+plt.figure(figsize=(10,5))
+
+plt.plot(df["threads"], df["parallel_ms"], marker="o", label="Параллельное время (ms)")
+
+plt.axhline(206, linestyle="--", color="gray", label="последовательное = 206 мс")
+
+plt.axvline(4, linestyle="--", color="red", label="Количество ядер в системе")
+
+plt.xscale("log")
+plt.xticks(threads_ticks, threads_ticks)
+plt.xlabel("Количество потоков")
+plt.ylabel("Время (мс)")
+plt.title("Зависимость времени выполнения от числа потоков")
+plt.grid(True, linestyle="--", linewidth=0.5)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+
+plt.figure(figsize=(10,5))
+
+plt.plot(df["threads"], df["speed_up"], marker="o", label="Speed-up")
+
+plt.axvline(4, linestyle="--", color="red", label="Количество ядер в системе")
+
+plt.xscale("log")
+plt.xticks(threads_ticks, threads_ticks)
+plt.xlabel("Количество потоков")
+plt.ylabel("Speed-up")
+plt.title("Speed-up от количества потоков")
+plt.grid(True, linestyle="--", linewidth=0.5)
+plt.legend()
+plt.tight_layout()
+plt.show()
